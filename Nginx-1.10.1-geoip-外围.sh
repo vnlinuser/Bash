@@ -43,11 +43,16 @@ gunzip -q ${SRC}/GeoLiteCity.dat.gz -d ${SRC}/ && echo $?
 
 #从官方下载nginx
 #wget -O /usr/local/src/nginx-1.10.1.tar.gz http://nginx.org/download/nginx-1.10.1.tar.gz
-echo "http://nginx.org/download/nginx-1.10.1.tar.gz" > ${SRC}/wget-list
+#echo "http://nginx.org/download/nginx-1.10.1.tar.gz" > ${SRC}/wget-list
+NGURL='http://nginx.org/download/nginx-1.10.1.tar.gz'
 
-NGX_VER="$(awk -F '/' '/nginx/{print $(NF)}' ${SRC}/wget-list |sed -e 's/.tar.gz//')"
+#定义NGINX 的版本
+#NGX_VER="$(awk -F '/' '/nginx/{print $(NF)}' ${SRC}/wget-list |sed -e 's/.tar.gz//')"
+NGX_VER="$(echo ${URL##*/} |cut -f1-3 -d '.')"
 
-wget -i ${SRC}/wget-list -P ${SRC}/
+#下载NGINX：
+#wget -i ${SRC}/wget-list -P ${SRC}/
+wget -O ${SRC}/${NGX_VER}.tar.gz $NGURL
 
 #解压nginx
 tar zxf ${SRC}/${NGX_VER}.tar.gz -C ${SRC}/

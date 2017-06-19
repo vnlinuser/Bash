@@ -64,7 +64,7 @@ else
     sed -i 's/4096/65535/g' /etc/security/limits.d/20-nproc.conf
 fi
 
-#设置服务器名称（名称为:地区-类型-编号  HK-WEB-20170605)
+#设置服务器名称（名称为:地区-类型-编号  HKJH-WEB-20170605)
 read -p "Please enter the server name: " NAME
 hostnamectl set-hostname $NAME
 

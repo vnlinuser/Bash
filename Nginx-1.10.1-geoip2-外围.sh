@@ -2,7 +2,7 @@
 
 echo -e "\e[31m
 ==================================================================================
-脚本作用：一键安装或卸载 nginx 代理服务器
+脚本作用：一键安装nginx 代理服务器）
 注意事项：修改NGINX URL 地址及UPSTREAM 后端服务器地址，以便安装理想版本
 ==================================================================================
 \e[m"
@@ -33,11 +33,14 @@ useradd -s /sbin/nologin nginx
 #创建数据缓存和log 存放目录，并授权目录的所属主和组为nginx：
 mkdir -p /data/nginx/{tmp,logs} && chown -R nginx.nginx /data/nginx/
 
+#从github 克隆所需的模块：
 git clone https://github.com/FRiCKLE/ngx_cache_purge.git ${SRC}/ngx_cache_purge
 git clone https://github.com/yaoweibin/nginx_upstream_check_module.git ${SRC}/nginx_upstream_check_module
 git clone https://github.com/zorgnax/libtap.git ${SRC}/libtap
 git clone https://github.com/maxmind/libmaxminddb.git ${SRC}/libmaxminddb
 git clone https://github.com/leev/ngx_http_geoip2_module ${SRC}/ngx_http_geoip2_module
+
+#GEOIP2 所支持的数据文件
 wget -O ${SRC}/GeoLite2-Country.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.mmdb.gz
 wget -O ${SRC}/GeoLite2-City.mmdb.gz http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
 
@@ -51,11 +54,16 @@ ln -s ${SRC}/libtap/* ${SRC}/libmaxminddb/t/libtap/
 
 #从官方下载nginx
 #wget -O /usr/local/src/nginx-1.10.1.tar.gz http://nginx.org/download/nginx-1.10.1.tar.gz
-echo "http://nginx.org/download/nginx-1.10.1.tar.gz" > ${SRC}/wget-list
+#echo "http://nginx.org/download/nginx-1.10.1.tar.gz" > ${SRC}/wget-list
+NGURL='http://nginx.org/download/nginx-1.10.1.tar.gz'
 
-NGX_VER="$(awk -F '/' '/nginx/{print $(NF)}' ${SRC}/wget-list |sed -e 's/.tar.gz//')"
+#定义NGINX 的版本
+#NGX_VER="$(awk -F '/' '/nginx/{print $(NF)}' ${SRC}/wget-list |sed -e 's/.tar.gz//')"
+NGX_VER="$(echo ${URL##*/} |cut -f1-3 -d '.')"
 
-wget -i ${SRC}/wget-list -P ${SRC}/
+#下载NGINX：
+#wget -i ${SRC}/wget-list -P ${SRC}/
+wget -O ${SRC}/${NGX_VER}.tar.gz $NGURL
 
 #解压nginx
 tar zxf ${SRC}/${NGX_VER}.tar.gz -C ${SRC}/
