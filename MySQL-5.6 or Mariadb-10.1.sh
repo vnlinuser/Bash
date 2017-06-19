@@ -201,7 +201,7 @@ sleep 5
 
 #开启防火墙的80 端口
 if [ "${OS_VER}" -eq 6 ] ;then
-    [[ -z "(ps aux|egrep iptables |egrep -v 'grep')" ]] && service iptables start
+    [[ "$(service iptables status)" =~ 'not running' ]] && service iptables start
     iptables -I INPUT -p tcp -s $1 --dport 3306 -j ACCEPT
     service iptables save
 else

@@ -220,7 +220,7 @@ cp ${SRC}/${PHPV}/php.ini-production /usr/local/php/etc/php.ini
 
 #开启防火墙的80 端口
 if [ "${OS_VER}" -eq 6 ] ;then
-    [[ -z "(ps aux|egrep iptables |egrep -v 'grep')" ]] && service iptables start
+    [[ "$(service iptables status)" =~ 'not running' ]] && service iptables start
     iptables -I INPUT -p tcp --dport 80 -j ACCEPT
     service iptables save
 else
