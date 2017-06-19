@@ -80,8 +80,6 @@ echo '/usr/local/lib/' >> /etc/ld.so.conf && ldconfig
 #进入解压目录
 cd ${SRC}/${NGX_VER}
 
-
-
 #配置编译参数
 ./configure  --prefix=/usr/local/nginx --user=nginx --group=nginx --with-poll_module --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_geoip_module=dynamic --with-http_gunzip_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_auth_request_module --with-http_sub_module --with-http_dav_module  --http-client-body-temp-path=/data/nginx/tmp/body --http-proxy-temp-path=/data/nginx/tmp/proxy --with-stream=dynamic --with-stream_ssl_module --with-pcre --add-module=${SRC}/nginx_upstream_check_module  --add-module=${SRC}/ngx_cache_purge --add-dynamic-module=${SRC}/ngx_http_geoip2_module
 #编译
